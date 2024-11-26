@@ -67,7 +67,7 @@ def signin(request):
 def log_out(request):
     logout(request)
     messages.success(request, 'You have successfully logged out')
-    return redirect('/signin')
+    return redirect('/')
 
 
 def dashboard(request):
