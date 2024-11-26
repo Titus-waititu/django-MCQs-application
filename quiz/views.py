@@ -152,6 +152,7 @@ def ticket(request):
 
         )
         tickets.save()
+        messages.success(request, 'Ticket submitted successfully')
 
     return render(request, 'quiz/ticket.html')
     
@@ -163,6 +164,7 @@ def testimonial(request):
             text=text
         )
         texts.save()
+        messages.success(request,'Testimonial submitted successfully')
     
     return render(request, 'quiz/testimonial.html',)
 
