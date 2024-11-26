@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-fk#)03#ris3!cp#x5_sixlgj(wave=ewo74*y08gjnpcnm#3g*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django-mcqs-application.onrender.com']
 
 
 # Application definition
