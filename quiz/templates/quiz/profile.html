@@ -15,6 +15,14 @@
       rel="stylesheet"
     />
     <style>
+      .navbar .nav-link.active {
+        background-color: #007bff;
+        color: white !important;
+        border-radius: 5px;
+      }
+      .navbar .nav-link:hover {
+        background-color: #e9ecef;
+      }
       body {
         display: flex;
         min-height: 100vh;
@@ -89,51 +97,101 @@
       footer p {
         font-size: 14px;
       }
+      .navbar-nav .nav-link {
+        padding: 8px 16px;
+      }
+      footer {
+  background-color: #23272b;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 30px; /* Added this line */
+}
+
+      .footer-bg {
+        background-color: #343a40;
+        color: white;
+        padding: 20px 0;
+      }
+
+      .footer-bg p {
+        font-size: 0.9rem;
+        margin: 0;
+      }
+      .view-all {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
-    <!-- Header -->
-    <header class="header-bg text-white text-center py-3">
-      <h1 class="fw-bold">Welcome {{user}} to MCQs Quiz Portal</h1>
-    </header>
-
     <div class="container-fluid">
       <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-3 col-lg-2 sidebar pt-3">
-          <h5 class="px-3 text-secondary">User Menu</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard">
-                <i class="bi bi-speedometer2"></i> Dashboard
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/profile">
-                <i class="bi bi-person-circle"></i> Profile
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/testimonial">
-                <i class="bi bi-chat-dots"></i> Testimonials
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/ticket">
-                <i class="bi bi-envelope"></i> Tickets
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-danger" href="/log_out">
-                <i class="bi bi-box-arrow-right"></i> Logout
-              </a>
-            </li>
-          </ul>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+          <div class="container">
+            <a class="navbar-brand text-primary fw-bold" href="#">MCQs Portal</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/dashboard">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="/profile">
+                    <i class="bi bi-person-circle"></i> Profile
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/testimonial">
+                    <i class="bi bi-chat-dots"></i> Testimonials
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/ticket">
+                    <i class="bi bi-envelope"></i> Tickets
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-danger" href="/log_out">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </nav>
 
         <!-- Content Area -->
         <div class="container-fluid col-md-9 mt-4">
-          <div class="row">
+          <div class="container">
+            <h2>Profile Details</h2>
+            <form action="">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" value="{{user.username}}" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" value="{{user.email}}" readonly>
+              </div>
+            </form>
+          </div>
+
+          <div class="row mt-4">
             <div class="col">
               <h3>Quiz History</h3>
               {% if quiz_history %}
@@ -146,6 +204,7 @@
                       <th>Total Marks</th>
                       <th>Percentage</th>
                       <th>Attempted At</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -156,6 +215,7 @@
                       <td>{{ history.total_marks }}</td>
                       <td>{{ history.percentage|floatformat:2 }}%</td>
                       <td>{{ history.created_at|date:"M d, Y H:i" }}</td>
+                      <td><a href="{% url 'deletehist' history.id  %}">Delete</a></td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -166,14 +226,21 @@
               {% endif %}
             </div>
           </div>
+
+          <div class="mt-3">
+            <button class="btn btn-danger">
+              <a href="{% url 'delete_account' user.id %}" class="text-white text-decoration-none mb-2">Delete Account</a>
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Footer -->
-    <footer>
+    <footer style="margin-top: 30px;" >
       <p class="mb-0">&copy; 2024 MCQs Quiz Portal. All Rights Reserved.</p>
     </footer>
+    
 
     <!-- Add Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

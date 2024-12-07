@@ -1,8 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import Category, Question, Answer, Testimonial, Ticket, UserQuizHistory
+from .models import Category,  Answer, Testimonial, Ticket, UserQuizHistory
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets
+from .serializers import CategorySerialzer
+
+class CategoryView(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerialzer
+
 
 
 def signup(request):
@@ -10,6 +18,8 @@ def signup(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
+        email = request.POST['email']
+        # profile_image = request.Files[]
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')
         pass2 = request.POST.get('pass2')
@@ -30,7 +40,8 @@ def signup(request):
         user = User.objects.create_user(
             first_name=first_name,
             last_name=last_name,
-            username=username
+            username=username,
+            email =email
         )
         
         # Set the user's password and save the user object
@@ -92,10 +103,14 @@ def profile(request):
         'quiz_history': quiz_history,
     })
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import UserQuizHistory, Question, Answer, Category
-from django.db.models import Sum
+from django.shortcuts import get_object_or_404, redirect
+
+def delete_account(request, id):
+    user = get_object_or_404(User, id=id)  # Fetch the user object or return a 404 error
+    user.delete()  # Delete the user instance
+    return redirect('/')  # Redirect to the desired URL
+
+
 
 @login_required
 def submit_quiz(request, category_id):
@@ -133,6 +148,7 @@ def submit_quiz(request, category_id):
     return render(request, 'quiz/result.html', {
         'score': score,
         'total_marks': total_marks,
+        'percentage':percentage
     })
 
 
@@ -155,7 +171,12 @@ def ticket(request):
         messages.success(request, 'Ticket submitted successfully')
 
     return render(request, 'quiz/ticket.html')
-    
+
+def delete(request,id):
+    product = UserQuizHistory.objects.get(id=id)
+    product.delete()
+    return redirect('/profile')
+
 def testimonial(request):
     if request.method == "POST":
         text = request.POST['text']
@@ -186,3 +207,10 @@ def userquizhistory(request):
         )
         user_quiz_history.save()
  
+def search(request):
+    query = request.GET.get('search')
+    results = []
+    if query:
+        results = Category.objects.filter(name__icontains = query)
+
+    return render(request, 'dashboard.html',{'results':results,'query':query})

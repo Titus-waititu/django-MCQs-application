@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Question, Answer,User,UserQuizHistory
+from .models import Category, Question, Answer,UserQuizHistory,Testimonial,Ticket
 
 # Register your models here.
 class AnswerAdmin(admin.StackedInline):
@@ -11,7 +11,8 @@ class QuestionAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Question)
 admin.site.register(Answer)
-admin.site.register(User)
+admin.site.register(Testimonial)
+admin.site.register(Ticket)
 admin.site.register(UserQuizHistory)
 
 

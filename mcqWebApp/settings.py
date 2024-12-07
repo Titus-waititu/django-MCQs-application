@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-fk#)03#ris3!cp#x5_sixlgj(wave=ewo74*y08gjnpcnm#3g*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-mcqs-application.onrender.com']
+ALLOWED_HOSTS = ['django-mcqs-application.onrender.com','127.0.0.1']
 
 
 # Application definition
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quiz'
+    'quiz',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
