@@ -18,11 +18,12 @@ urlpatterns = [
     path('signin/',views.signin, name = 'signin'),
     path('log_out/',views.log_out, name = 'log_out'),
     path('ticket/' , views.ticket, name='ticket'),
-    path('search/' , views.search, name='search'),
+    # path('search/' , views.search, name='search'),
     path('delete_account/<id>/' , views.delete_account, name='delete_account'),
     path('deletehist/<id>/' , views.delete, name='deletehist'),
     path('testimonial/',views.testimonial, name='testimonial'),
     path('profile/',views.profile, name = 'profile'),
+    # path('search/',views.search, name = 'search'),
     path('api/categories', include(router.urls))
     
     

@@ -145,19 +145,20 @@
           </div>
 
           <!-- Search Bar -->
-          <div class="bg-light p-3 rounded shadow-sm mb-4">
+          <!-- <div class="bg-light p-3 rounded shadow-sm mb-4">
             <h5 class="section-header">Search Quizzes</h5>
-            <form class="d-flex">
+            <form class="d-flex" action="/search/" method="get">
               <input
                 type="text"
                 id="input"
+                name="search"
                 class="form-control me-2"
                 placeholder="Search quizzes"
                 required
               />
-              <button id="searchbtn" class="btn btn-primary">Search</button>
+              <button type="submit">Search</button>
             </form>
-          </div>
+          </div> -->
 
           <!-- Categories Section -->
           <div class="bg-white p-4 rounded shadow-sm mb-4">
@@ -191,7 +192,7 @@
     </div>
 
     <!-- Footer -->
-    <footer style="margin-top: 30px" >
+    <footer style="margin-top: 30px">
       <p class="mb-0">&copy; 2024 MCQs Quiz Portal. All Rights Reserved.</p>
     </footer>
 

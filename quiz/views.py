@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from .serializers import CategorySerialzer
+from django.db.models import Q
 
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -177,6 +178,16 @@ def delete(request,id):
     product.delete()
     return redirect('/profile')
 
+# def search(request):
+#     query = request.GET.get('search')
+#     results = []
+#     if query:
+#         results = Category.objects.filter(Q(name__icontains = query))
+#         messages.success(request, 'search was successful')
+#         return render(request, 'quiz/dashboard.html',{'results':results,'query':query,'messages':messages})
+#     else:
+#         messages.error(request, 'Enter a search item')
+
 def testimonial(request):
     if request.method == "POST":
         text = request.POST['text']
@@ -207,10 +218,3 @@ def userquizhistory(request):
         )
         user_quiz_history.save()
  
-def search(request):
-    query = request.GET.get('search')
-    results = []
-    if query:
-        results = Category.objects.filter(name__icontains = query)
-
-    return render(request, 'dashboard.html',{'results':results,'query':query})
